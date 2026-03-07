@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=5">
+<title>NicevibesNV — Full Dev Roadmap</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+ --bg:#0a0a0a;
+ --card:#131313;
+ --card2:#1a1a1a;
+ --orange:#f97316;
+ --orange-dim:#f9731620;
+ --orange-border:#f9731640;
+ --text:#ffffff;
+ --dim:#888;
+ --dim2:#555;
+ --border:#222;
+}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;padding:0 0 80px;max-width:480px;margin:0 auto}
+
+/* TOP HEADER */
+.header{padding:32px 20px 24px;position:relative;overflow:hidden}
+.header::before{content:'';position:absolute;top:-60px;right:-40px;width:200px;height:200px;background:radial-gradient(circle,#f9731618 0%,transparent 70%);pointer-events:none}
+.logo-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px}
+.logo{font-family:'Syne',sans-serif;font-size:22px;font-weight:800;letter-spacing:-0.5px}
+.logo span{color:var(--orange)}
+.version{font-size:10px;color:var(--dim);background:var(--card2);border:1px solid var(--border);padding:4px 10px;border-radius:20px;letter-spacing:1px}
+.hero-title{font-family:'Syne',sans-serif;font-size:28px;font-weight:800;line-height:1.2;margin-bottom:8px}
+.hero-title em{font-style:normal;color:var(--orange)}
+.hero-sub{font-size:13px;color:var(--dim);line-height:1.6;margin-bottom:20px}
+.stats-row{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.stat{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:12px;text-align:center}
+.stat-n{font-family:'Syne',sans-serif;font-size:20px;font-weight:800;color:var(--orange)}
+.stat-l{font-size:10px;color:var(--dim);margin-top:2px;letter-spacing:0.5px}
+
+/* PHASE NAV */
+.phase-nav{padding:0 20px 16px;display:flex;gap:8px;overflow-x:auto;scrollbar-width:none}
+.phase-nav::-webkit-scrollbar{display:none}
+.pnav{flex-shrink:0;font-size:11px;font-weight:600;padding:7px 14px;border-radius:20px;border:1px solid var(--border);color:var(--dim);cursor:pointer;transition:all .2s;white-space:nowrap}
+.pnav.active,.pnav:hover{background:var(--orange);border-color:var(--orange);color:#000}
+
+/* PHASE BLOCK */
+.phase{margin:0 20px 12px;border-radius:16px;overflow:hidden;border:1px solid var(--border);background:var(--card)}
+.phase-header{padding:18px 18px 16px;cursor:pointer;user-select:none;position:relative}
+.phase-header:active{background:rgba(255,255,255,0.02)}
+.phase-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.phase-badge{display:flex;align-items:center;gap:8px}
+.phase-num{width:28px;height:28px;background:var(--orange);border-radius:8px;display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-size:13px;font-weight:800;color:#000;flex-shrink:0}
+.phase-icon{font-size:16px}
+.phase-name{font-family:'Syne',sans-serif;font-size:16px;font-weight:800;flex:1;margin-left:4px}
+.phase-chevron{font-size:11px;color:var(--dim);transition:transform .3s}
+.phase-chevron.open{transform:rotate(180deg)}
+.phase-meta{display:flex;gap:8px;flex-wrap:wrap}
+.pmeta{font-size:10px;padding:3px 10px;border-radius:20px;font-weight:600;letter-spacing:0.3px}
+.pmeta.time{background:var(--orange-dim);color:var(--orange);border:1px solid var(--orange-border)}
+.pmeta.level{background:#ffffff08;color:var(--dim);border:1px solid var(--border)}
+.phase-prog-bar{height:3px;background:var(--border);border-radius:2px;margin-top:12px;overflow:hidden}
+.phase-prog-fill{height:100%;border-radius:2px;background:var(--orange);transition:width .5s ease;width:0%}
+
+/* PHASE BODY */
+.phase-body{display:none;border-top:1px solid var(--border)}
+.section{padding:14px 18px;border-bottom:1px solid #1a1a1a}
+.section:last-child{border-bottom:none}
+.section-title{font-size:10px;letter-spacing:2px;color:var(--orange);font-weight:700;margin-bottom:10px;text-transform:uppercase}
+.topic{display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:1px solid #151515;cursor:pointer}
+.topic:last-child{border-bottom:none}
+.topic:active{opacity:.7}
+.t-chk{width:20px;height:20px;border:1.5px solid var(--border);border-radius:6px;flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:all .2s;margin-top:1px}
+.t-chk.done{background:var(--orange);border-color:var(--orange)}
+.t-chk.done::after{content:'';font-size:11px;font-weight:800;color:#000}
+.t-info{flex:1}
+.t-name{font-size:13px;font-weight:500;line-height:1.4;margin-bottom:3px}
+.topic.done-t .t-name{text-decoration:line-through;color:var(--dim2)}
+.t-desc{font-size:11px;color:var(--dim);line-height:1.5}
+.t-tag{font-size:9px;padding:2px 7px;border-radius:10px;font-weight:700;flex-shrink:0;margin-top:2px;align-self:flex-start}
+.tag-fund{background:#f9731612;color:var(--orange);border:1px solid #f9731630}
+.tag-fe{background:#3b82f612;color:#60a5fa;border:1px solid #3b82f630}
+.tag-fs{background:#10b98112;color:#34d399;border:1px solid #10b98130}
+.tag-sec{background:#ef444412;color:#f87171;border:1px solid #ef444430}
+.tag-ai{background:#a855f712;color:#c084fc;border:1px solid #a855f730}
+
+/* PROGRESS SUMMARY */
+.prog-summary{margin:0 20px 12px;background:var(--card);border:1px solid var(--border);border-radius:16px;padding:18px}
+.ps-title{font-family:'Syne',sans-serif;font-size:13px;font-weight:800;margin-bottom:14px;color:var(--dim)}
+.ps-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+.ps-label{font-size:12px;color:var(--dim)}
+.ps-pct{font-size:12px;font-weight:700;color:var(--orange)}
+.ps-bar{height:5px;background:var(--border);border-radius:3px;overflow:hidden;flex:1;margin:0 10px}
+.ps-fill{height:100%;border-radius:3px;background:var(--orange);transition:width .5s}
+
+/* FLOATING PROGRESS */
+.fab{position:fixed;bottom:20px;right:20px;background:var(--orange);width:52px;height:52px;border-radius:16px;display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-size:13px;font-weight:800;color:#000;box-shadow:0 8px 24px #f9731640;cursor:pointer;z-index:100}
+
+/* TOAST */
+.toast{position:fixed;top:20px;left:50%;transform:translateX(-50%) translateY(-80px);background:var(--orange);color:#000;font-size:12px;font-weight:700;padding:10px 20px;border-radius:12px;z-index:999;transition:transform .3s;white-space:nowrap}
+.toast.show{transform:translateX(-50%) translateY(0)}
+</style>
+</head>
+<body>
+
+<div class="toast" id="toast"> Topic complete!</div>
+
+<div class="header">
+ <div class="logo-row">
+ <div class="logo">Nicevibe<span>NV</span></div>
+ <div class="version">ROADMAP 2026</div>
+ </div>
+ <div class="hero-title">Your Full<br><em>Dev Journey</em></div>
+ <div class="hero-sub">From zero to AI Security Engineer. Every topic. Every skill. Step by step.</div>
+ <div class="stats-row">
+ <div class="stat"><div class="stat-n" id="s-done">0</div><div class="stat-l">DONE</div></div>
+ <div class="stat"><div class="stat-n" id="s-total">0</div><div class="stat-l">TOPICS</div></div>
+ <div class="stat"><div class="stat-n" id="s-pct">0%</div><div class="stat-l">COMPLETE</div></div>
+ </div>
+</div>
+
+<div class="phase-nav">
+ <div class="pnav active" onclick="scroll2('p1')">Fundamentals</div>
+ <div class="pnav" onclick="scroll2('p2')">Frontend</div>
+ <div class="pnav" onclick="scroll2('p3')">Full Stack</div>
+ <div class="pnav" onclick="scroll2('p4')">Web Security</div>
+ <div class="pnav" onclick="scroll2('p5')">Cybersecurity</div>
+ <div class="pnav" onclick="scroll2('p6')">AI Engineer</div>
+</div>
+
+<div class="prog-summary">
+ <div class="ps-title">OVERALL PROGRESS</div>
+ <div id="prog-rows"></div>
+</div>
+
+<!-- PHASE 1 — FUNDAMENTALS -->
+<div class="phase" id="p1">
+ <div class="phase-header" onclick="togglePhase('p1')">
+ <div class="phase-top">
+ <div class="phase-badge">
+ <div class="phase-num">01</div>
+ 
+ <div class="phase-name">Fundamentals</div>
+ </div>
+ <div class="phase-chevron" id="arr-p1">▼</div>
+ </div>
+ <div class="phase-meta">
+ <span class="pmeta time"> 2 months phone · 1 month laptop</span>
+ <span class="pmeta level">Beginner</span>
+ </div>
+ <div class="phase-prog-bar"><div class="phase-prog-fill" id="pp-p1"></div></div>
+ </div>
+ <div class="phase-body" id="pb-p1">
+
+ <div class="section">
+ <div class="section-title">How The Internet Works</div>
+ <div class="topic" onclick="tick(this,'f1')"><div class="t-chk" id="f1"></div><div class="t-info"><div class="t-name">How the Internet Works</div><div class="t-desc">Client/server model, packets, routers, ISPs, data journey</div></div><span class="t-tag tag-fund">CORE</span></div>
+ <div class="topic" onclick="tick(this,'f2')"><div class="t-chk" id="f2"></div><div class="t-info"><div class="t-name">HTTP & HTTPS</div><div class="t-desc">Protocols, SSL/TLS encryption, certificates, status codes</div></div><span class="t-tag tag-fund">CORE</span></div>
+ <div class="topic" onclick="tick(this,'f3')"><div class="t-chk" id="f3"></div><div class="t-info"><div class="t-name">DNS — Domain Name System</div><div class="t-desc">DNS lookup chain, A/CNAME/MX records, TTL, caching, DoH</div></div><span class="t-tag tag-fund">CORE</span></div>
+ <div class="topic" onclick="tick(this,'f4')"><div class="t-chk" id="f4"></div><div class="t-info"><div class="t-name">IP Addresses — IPv4 & IPv6</div><div class="t-desc">Public vs private IP, localhost 127.0.0.1, 32-bit vs 128-bit</div></div><span class="t-tag tag-fund">CORE</span></div>
+ <div class="topic" onclick="tick(this,'f5')"><div class="t-chk" id="f5"></div><div class="t-info"><div class="t-name">TCP vs UDP & 3-Way Handshake</div><div class="t-desc">Reliable vs fast delivery, SYN/SYN-ACK/ACK, SYN flood attack</div></div><span class="t-tag tag-fund">CORE</span></div>
+ <div class="topic" onclick="tick(this,'f6')"><div class="t-chk" id="f6"></div><div class="t-info"><div class="t-name">Ports & Protocols</div><div class="t-desc">21=FTP, 22=SSH, 53=DNS, 80=HTTP, 443=HTTPS, 3306=MySQL</div></div><span class="t-tag tag-fund">CORE</span></div>
+ <div class="topic" onclick="tick(this,'f7')"><div class="t-chk" id="f7"></div><div class="t-info"><div class="t-name">Domains & Web Hosting</div><div class="t-desc">Registrars, shared/VPS/dedicated/cloud hosting, CDN, Cloudflare</div></div><span class="t-tag tag-fund">CORE</span></div>
+ <div class="topic" onclick="tick(this,'f8')"><div class="t-chk" id="f8"></div><div class="t-info"><div class="t-name">Browsers & How They Work</div><div class="t-desc">DOM parsing, render pipeline, DevTools, network tab</div></div><span class="t-tag tag-fund">CORE</span></div>
+ </div>
+
+ <div class="section">
+ <div class="section-title">Linux & Terminal</div>
+ <div class="topic" onclick="tick(this,'f9')"><div class="t-chk" id="f9"></div><div class="t-info"><div class="t-name">What is Linux</div><div class="t-desc">Kernel, distros (Ubuntu/Kali/Debian), open source, why devs use it</div></div><span class="t-tag tag-fund">CORE</span></div>
+ <div class="topic" onclick="tick(this,'f10')"><div class="t-chk" id="f10"></div><div class="t-info"><div class="t-name">Navigation — pwd ls cd mkdir</div><div class="t-desc">File system navigation, flags (-la -lh), directory structure</div></div><span class="t-tag tag-fund">PRACTICE</span></div>
+ <div class="topic" onclick="tick(this,'f11')"><div class="t-chk" id="f11"></div><div class="t-info"><div class="t-name">File Management — touch cat nano cp mv rm</div><div class="t-desc">Create, read, edit, copy, move, delete files and folders</div></div><span class="t-tag tag-fund">PRACTICE</span></div>
+ <div class="topic" onclick="tick(this,'f12')"><div class="t-chk" id="f12"></div><div class="t-info"><div class="t-name">Search & Filter — grep find wc sort</div><div class="t-desc">Search through files, find by name, word count, sorting output</div></div><span class="t-tag tag-fund">PRACTICE</span></div>
+ <div class="topic" onclick="tick(this,'f13')"><div class="t-chk" id="f13"></div><div class="t-info"><div class="t-name">Pipes & Redirection</div><div class="t-desc">| pipe, > redirect, >> append, combine 3+ commands</div></div><span class="t-tag tag-fund">PRACTICE</span></div>
+ <div class="topic" onclick="tick(this,'f14')"><div class="t-chk" id="f14"></div><div class="t-info"><div class="t-name">Permissions — chmod chown</div><div class="t-desc">rwx, numeric 644/755/777, +x executable, user vs group vs other</div></div><span class="t-tag tag-fund">CORE</span></div>
+ <div class="topic" onclick="tick(this,'f15')"><div class="t-chk" id="f15"></div><div class="t-info"><div class="t-name">Process Management — ps top kill</div><div class="t-desc">PID, background jobs, killing processes, system monitoring</div></div><span class="t-tag tag-fund">PRACTICE</span></div>
+ <div class="topic" onclick="tick(this,'f16')"><div class="t-chk" id="f16"></div><div class="t-info"><div class="t-name">Environment Variables & .bashrc</div><div class="t-desc">$PATH, $HOME, export, permanent variables, why PATH matters</div></div><span class="t-tag tag-fund">CORE</span></div>
+ <div class="topic" onclick="tick(this,'f17')"><div class="t-chk" id="f17"></div><div class="t-info"><div class="t-name">Package Manager — pkg / apt</div><div class="t-desc">Install/remove/search packages, update system, pkg in Termux</div></div><span class="t-tag tag-fund">PRACTICE</span></div>
+ <div class="topic" onclick="tick(this,'f18')"><div class="t-chk" id="f18"></div><div class="t-info"><div class="t-name">Bash Scripting</div><div class="t-desc">Variables, if/else, for loops, functions, arguments $1 $2, chmod +x</div></div><span class="t-tag tag-fund">PROJECT</span></div>
+ </div>
+
+ <div class="section">
+ <div class="section-title">Git & GitHub</div>
+ <div class="topic" onclick="tick(this,'f19')"><div class="t-chk" id="f19"></div><div class="t-info"><div class="t-name">What is Git & Version Control</div><div class="t-desc">Why version control exists, Git vs GitHub, commit/branch/merge concepts</div></div><span class="t-tag tag-fund">CORE</span></div>
+ <div class="topic" onclick="tick(this,'f20')"><div class="t-chk" id="f20"></div><div class="t-info"><div class="t-name">Git Basics — init add commit log</div><div class="t-desc">git init, git status, git add, git commit -m, git log --oneline</div></div><span class="t-tag tag-fund">PRACTICE</span></div>
+ <div class="topic" onclick="tick(this,'f21')"><div class="t-chk" id="f21"></div><div class="t-info"><div class="t-name">Branches — create merge</div><div class="t-desc">git branch, git checkout, git merge, resolving conflicts</div></div><span class="t-tag tag-fund">PRACTICE</span></div>
+ <div class="topic" onclick="tick(this,'f22')"><div class="t-chk" id="f22"></div><div class="t-info"><div class="t-name">GitHub — push pull clone</div><div class="t-desc">Remote repos, git push, git pull, git clone, .gitignore, README.md</div></div><span class="t-tag tag-fund">PRACTICE</span></div>
+ <div class="topic" onclick="tick(this,'f23')"><div class="t-chk" id="f23"></div><div class="t-info"><div class="t-name">Pull Requests & Workflow</div><div class="t-desc">Professional workflow: branch → commit → PR → merge, code review</div></div><span class="t-tag tag-fund">PROJECT</span></div>
+ <div class="topic" onclick="tick(this,'f24')"><div class="t-chk" id="f24"></div><div class="t-info"><div class="t-name">Markdown</div><div class="t-desc">Write professional READMEs: headings, bold, code blocks, tables, badges</div></div><span class="t-tag tag-fund">PRACTICE</span></div>
+ </div>
+
+ <div class="section">
+ <div class="section-title">HTML</div>
+ <div class="topic" onclick="tick(this,'f25')"><div class="t-chk" id="f25"></div><div class="t-info"><div class="t-name">HTML Structure & Document</div><div class="t-desc">DOCTYPE, html/head/body, how browsers parse HTML</div></div><span class="t-tag tag-fund">CORE</span></div>
+ <div class="topic" onclick="tick(this,'f26')"><div class="t-chk" id="f26"></div><div class="t-info"><div class="t-name">Text Tags — h1-h6 p strong em</div><div class="t-desc">Headings, paragraphs, inline formatting, br hr</div></div><span class="t-tag tag-fund">PRACTICE</span></div>
+ <div class="topic" onclick="tick(this,'f27')"><div class="t-chk" id="f27"></div><div class="t-info"><div class="t-name">Links & Images</div><div class="t-desc">a href, target=_blank, img src, alt text, relative vs absolute paths</div></div><span class="t-tag tag-fund">PRACTICE</span></div>
+ <div class="topic" onclick="tick(this,'f28')"><div class="t-chk" id="f28"></div><div class="t-info"><div class="t-name">Lists & Tables</div><div class="t-desc">ul/ol/li, nested lists, table/tr/td/th, thead/tbody</div></div><span class="t-tag tag-fund">PRACTICE</span></div>
+ <div class="topic" onclick="tick(this,'f29')"><div class="t-chk" id="f29"></div><div class="t-info"><div class="t-name">Forms — Full Practice</div><div class="t-desc">input types, select, radio, checkbox, textarea, file, submit</div></div><span class="t-tag tag-fund">PRACTICE</span></div>
+ <div class="topic" onclick="tick(this,'f30')"><div class="t-chk" id="f30"></div><div class="t-info"><div class="t-name">Semantic HTML</div><div class="t-desc">header/nav/main/article/section/aside/footer — why it matters for SEO</div></div><span class="t-tag tag-fund">CORE</span></div>
+ <div class="topic" onclick="tick(this,'f31')"><div class="t-chk" id="f31"></div><div class="t-info"><div class="t-name">Meta Tags & SEO Basics</div><div class="t-desc">charset, viewport, description, og: tags for social sharing</div></div><span class="t-tag tag-fund">CORE</span></div>
+ </div>
+
+ <div class="section">
+ <div class="section-title">CSS</div>
+ <div class="topic" onclick="tick(this,'f32')"><div class="t-chk" id="f32"></div><div class="t-info"><div class="t-name">CSS Selectors & Specificity</div><div class="t-desc">element, class, id selectors, specificity rules, cascade</div></div><span class="t-tag tag-fund">CORE</span></div>
+ <div class="topic" onclick="tick(this,'f33')"><div class="t-chk" id="f33"></div><div class="t-info"><div class="t-name">Colors & Typography</div><div class="t-desc">hex/rgb/hsl, Google Fonts, font-size/weight/line-height</div></div><span class="t-tag tag-fund">PRACTICE</span></div>
+ <div class="topic" onclick="tick(this,'f34')"><div class="t-chk" id="f34"></div><div class="t-info"><div class="t-name">Box Model</div><div class="t-desc">content/padding/border/margin, box-sizing:border-box</div></div><span class="t-tag tag-fund">CORE</span></div>
+ <div class="topic" onclick="tick(this,'f35')"><div class="t-chk" id="f35"></div><div class="t-info"><div class="t-name">Display & Position</div><div class="t-desc">block/inline/inline-block, static/relative/absolute/fixed/sticky</div></div><span class="t-tag tag-fund">CORE</span></div>
+ <div class="topic" onclick="tick(this,'f36')"><div class="t-chk" id="f36"></div><div class="t-info"><div class="t-name">Flexbox</div><div class="t-desc">flex-direction, justify-content, align-items, gap, flex-wrap</div></div><span class="t-tag tag-fund">CORE</span></div>
+ <div class="topic" onclick="tick(this,'f37')"><div class="t-chk" id="f37"></div><div class="t-info"><div class="t-name">CSS Grid</div><div class="t-desc">grid-template-columns, fr unit, span, auto-fill, minmax()</div></div><span class="t-tag tag-fund">CORE</span></div>
+ <div class="topic" onclick="tick(this,'f38')"><div class="t-chk" id="f38"></div><div class="t-info"><div class="t-name">Responsive Design & Media Queries</div><div class="t-desc">Mobile-first, breakpoints 320/600/1024px, viewport units</div></div><span class="t-tag tag-fund">CORE</span></div>
+ <div class="topic" onclick="tick(this,'f39')"><div class="t-chk" id="f39"></div><div class="t-info"><div class="t-name">Pseudo-classes & Pseudo-elements</div><div class="t-desc">:hover :focus :nth-child, ::before ::after content</div></div><span class="t-tag tag-fund">PRACTICE</span></div>
+ <div class="topic" onclick="tick(this,'f40')"><div class="t-chk" id="f40"></div><div class="t-info"><div class="t-name">Transitions & Animations</div><div class="t-desc">transition, @keyframes, transform scale/rotate/translate</div></div><span class="t-tag tag-fund">PRACTICE</span></div>
+ <div class="topic" onclick="tick(this,'f41')"><div class="t-chk" id="f41"></div><div class="t-info"><div class="t-name">CSS Variables & Dark Mode</div><div class="t-desc">--var(), :root, dark mode toggle with one class swap</div></div><span class="t-tag tag-fund">PROJECT</span></div>
+ </div>
+
+ <div class="section">
+ <div class="section-title">Certificates</div>
+ <div class="topic" onclick="tick(this,'f42')"><div class="t-chk" id="f42"></div><div class="t-info"><div class="t-name">FreeCodeCamp — Responsive Web Design</div><div class="t-desc">5 projects: Tribute Page, Survey Form, Landing Page, Tech Docs, Portfolio</div></div><span class="t-tag tag-fund">CERT</span></div>
+ <div class="topic" onclick="tick(this,'f43')"><div class="t-chk" id="f43"></div><div class="t-info"><div class="t-name">Cisco NetAcad — Intro to Networks</div><div class="t-desc">Free course covering networking fundamentals with certificate</div></div><span class="t-tag tag-fund">CERT</span></div>
+ <div class="topic" onclick="tick(this,'f44')"><div class="t-chk" id="f44"></div><div class="t-info"><div class="t-name">Google Digital Garage — Fundamentals</div><div class="t-desc">Free Google certificate covering internet and digital fundamentals</div></div><span class="t-tag tag-fund">CERT</span></div>
+ </div>
+ </div>
+</div>
+
+<!-- PHASE 2 — FRONTEND -->
+<div class="phase" id="p2">
+ <div class="phase-header" onclick="togglePhase('p2')">
+ <div class="phase-top">
+ <div class="phase-badge">
+ <div class="phase-num">02</div>
+ 
+ <div class="phase-name">Frontend Dev</div>
+ </div>
+ <div class="phase-chevron" id="arr-p2">▼</div>
+ </div>
+ <div class="phase-meta">
+ <span class="pmeta time"> 5 months phone · 3 months laptop</span>
+ <span class="pmeta level">Intermediate</span>
+ </div>
+ <div class="phase-prog-bar"><div class="phase-prog-fill" id="pp-p2"></div></div>
+ </div>
+ <div class="phase-body" id="pb-p2">
+ <div class="section">
+ <div class="section-title">JavaScript</div>
+ <div class="topic" onclick="tick(this,'fe1')"><div class="t-chk" id="fe1"></div><div class="t-info"><div class="t-name">Variables — var let const & Data Types</div><div class="t-desc">string/number/boolean/null/undefined/object/array, typeof</div></div><span class="t-tag tag-fe">CORE</span></div>
+ <div class="topic" onclick="tick(this,'fe2')"><div class="t-chk" id="fe2"></div><div class="t-info"><div class="t-name">Operators & Conditionals</div><div class="t-desc">===vs==, &&/||/!, if/else/switch, ternary operator</div></div><span class="t-tag tag-fe">CORE</span></div>
+ <div class="topic" onclick="tick(this,'fe3')"><div class="t-chk" id="fe3"></div><div class="t-info"><div class="t-name">Loops — for while forEach</div><div class="t-desc">for, while, do-while, break/continue, FizzBuzz, nested loops</div></div><span class="t-tag tag-fe">PRACTICE</span></div>
+ <div class="topic" onclick="tick(this,'fe4')"><div class="t-chk" id="fe4"></div><div class="t-info"><div class="t-name">Functions & Arrow Functions</div><div class="t-desc">declaration vs expression, arrow =>, default params, rest/spread</div></div><span class="t-tag tag-fe">CORE</span></div>
+ <div class="topic" onclick="tick(this,'fe5')"><div class="t-chk" id="fe5"></div><div class="t-info"><div class="t-name">Scope & Closures</div><div class="t-desc">global/function/block scope, closure counter pattern</div></div><span class="t-tag tag-fe">CORE</span></div>
+ <div class="topic" onclick="tick(this,'fe6')"><div class="t-chk" id="fe6"></div><div class="t-info"><div class="t-name">Arrays — Methods map filter reduce</div><div class="t-desc">.map() .filter() .reduce() .find() .sort() .flat() .includes()</div></div><span class="t-tag tag-fe">CORE</span></div>
+ <div class="topic" onclick="tick(this,'fe7')"><div class="t-chk" id="fe7"></div><div class="t-info"><div class="t-name">Objects & Destructuring</div><div class="t-desc">Object.keys/values/entries, spread merge, destructuring arrays/objects</div></div><span class="t-tag tag-fe">CORE</span></div>
+ <div class="topic" onclick="tick(this,'fe8')"><div class="t-chk" id="fe8"></div><div class="t-info"><div class="t-name">DOM Manipulation & Events</div><div class="t-desc">querySelector, addEventListener, classList, innerHTML, event delegation</div></div><span class="t-tag tag-fe">PRACTICE</span></div>
+ <div class="topic" onclick="tick(this,'fe9')"><div class="t-chk" id="fe9"></div><div class="t-info"><div class="t-name">Async — Callbacks Promises Async/Await</div><div class="t-desc">setTimeout, Promise, .then().catch(), async/await, try/catch</div></div><span class="t-tag tag-fe">CORE</span></div>
+ <div class="topic" onclick="tick(this,'fe10')"><div class="t-chk" id="fe10"></div><div class="t-info"><div class="t-name">Fetch API & HTTP Requests</div><div class="t-desc">GET/POST/PUT/DELETE, headers, JSON.parse(), error handling</div></div><span class="t-tag tag-fe">PRACTICE</span></div>
+ <div class="topic" onclick="tick(this,'fe11')"><div class="t-chk" id="fe11"></div><div class="t-info"><div class="t-name">ES6+ — Classes Modules LocalStorage</div><div class="t-desc">class/extends, import/export, localStorage, sessionStorage</div></div><span class="t-tag tag-fe">CORE</span></div>
+ </div>
+ <div class="section">
+ <div class="section-title">TypeScript</div>
+ <div class="topic" onclick="tick(this,'fe12')"><div class="t-chk" id="fe12"></div><div class="t-info"><div class="t-name">Types, Interfaces & Type Aliases</div><div class="t-desc">string/number/boolean types, interface vs type, optional ?</div></div><span class="t-tag tag-fe">CORE</span></div>
+ <div class="topic" onclick="tick(this,'fe13')"><div class="t-chk" id="fe13"></div><div class="t-info"><div class="t-name">Generics & Utility Types</div><div class="t-desc">Array<T>, Promise<T>, Partial<T>, Pick<T,K>, Omit<T,K></div></div><span class="t-tag tag-fe">CORE</span></div>
+ <div class="topic" onclick="tick(this,'fe14')"><div class="t-chk" id="fe14"></div><div class="t-info"><div class="t-name">TS Classes & Enums</div><div class="t-desc">private/public/protected, readonly, implements, enum</div></div><span class="t-tag tag-fe">PRACTICE</span></div>
+ </div>
+ <div class="section">
+ <div class="section-title">React</div>
+ <div class="topic" onclick="tick(this,'fe15')"><div class="t-chk" id="fe15"></div><div class="t-info"><div class="t-name">Components, JSX & Props</div><div class="t-desc">Functional components, JSX syntax, passing/receiving props</div></div><span class="t-tag tag-fe">CORE</span></div>
+ <div class="topic" onclick="tick(this,'fe16')"><div class="t-chk" id="fe16"></div><div class="t-info"><div class="t-name">useState & useEffect</div><div class="t-desc">State management, side effects, dependencies array, cleanup</div></div><span class="t-tag tag-fe">CORE</span></div>
+ <div class="topic" onclick="tick(this,'fe17')"><div class="t-chk" id="fe17"></div><div class="t-info"><div class="t-name">useContext useReducer useRef</div><div class="t-desc">Global state, complex state, DOM refs, avoid re-renders</div></div><span class="t-tag tag-fe">CORE</span></div>
+ <div class="topic" onclick="tick(this,'fe18')"><div class="t-chk" id="fe18"></div><div class="t-info"><div class="t-name">Custom Hooks</div><div class="t-desc">useLocalStorage, useFetch, useDebounce, useWindowSize</div></div><span class="t-tag tag-fe">PRACTICE</span></div>
+ <div class="topic" onclick="tick(this,'fe19')"><div class="t-chk" id="fe19"></div><div class="t-info"><div class="t-name">React Router v6</div><div class="t-desc">BrowserRouter, Routes, Link, dynamic routes /blog/:id, 404 page</div></div><span class="t-tag tag-fe">PRACTICE</span></div>
+ <div class="topic" onclick="tick(this,'fe20')"><div class="t-chk" id="fe20"></div><div class="t-info"><div class="t-name">Forms & Controlled Components</div><div class="t-desc">onChange state, validation, error messages, submit handling</div></div><span class="t-tag tag-fe">PRACTICE</span></div>
+ </div>
+ <div class="section">
+ <div class="section-title">Next.js & Tailwind</div>
+ <div class="topic" onclick="tick(this,'fe21')"><div class="t-chk" id="fe21"></div><div class="t-info"><div class="t-name">Next.js App Router & File Routing</div><div class="t-desc">Pages, layouts, server vs client components, metadata</div></div><span class="t-tag tag-fe">CORE</span></div>
+ <div class="topic" onclick="tick(this,'fe22')"><div class="t-chk" id="fe22"></div><div class="t-info"><div class="t-name">Next.js API Routes & Data Fetching</div><div class="t-desc">API routes, SSR/SSG/ISR, dynamic routes, generateStaticParams</div></div><span class="t-tag tag-fe">PRACTICE</span></div>
+ <div class="topic" onclick="tick(this,'fe23')"><div class="t-chk" id="fe23"></div><div class="t-info"><div class="t-name">Tailwind CSS</div><div class="t-desc">Utility classes, responsive sm/md/lg, hover/focus states, dark mode</div></div><span class="t-tag tag-fe">PRACTICE</span></div>
+ <div class="topic" onclick="tick(this,'fe24')"><div class="t-chk" id="fe24"></div><div class="t-info"><div class="t-name">GSAP Animations</div><div class="t-desc">gsap.to/from, timelines, stagger, ScrollTrigger, React integration</div></div><span class="t-tag tag-fe">PROJECT</span></div>
+ </div>
+ <div class="section">
+ <div class="section-title">Testing & Deploy</div>
+ <div class="topic" onclick="tick(this,'fe25')"><div class="t-chk" id="fe25"></div><div class="t-info"><div class="t-name">Jest & React Testing Library</div><div class="t-desc">Unit tests, render/find/fire events, describe/it/expect</div></div><span class="t-tag tag-fe">PRACTICE</span></div>
+ <div class="topic" onclick="tick(this,'fe26')"><div class="t-chk" id="fe26"></div><div class="t-info"><div class="t-name">Web Performance & Accessibility</div><div class="t-desc">Lighthouse audit 90+, lazy loading, ARIA labels, color contrast</div></div><span class="t-tag tag-fe">CORE</span></div>
+ <div class="topic" onclick="tick(this,'fe27')"><div class="t-chk" id="fe27"></div><div class="t-info"><div class="t-name">Deploy — Vercel & Netlify</div><div class="t-desc">Deploy React/Next.js, CI/CD auto-deploy on git push, custom domain</div></div><span class="t-tag tag-fe">PROJECT</span></div>
+ </div>
+ <div class="section">
+ <div class="section-title">Certificates</div>
+ <div class="topic" onclick="tick(this,'fe28')"><div class="t-chk" id="fe28"></div><div class="t-info"><div class="t-name">FreeCodeCamp — JavaScript Algorithms</div></div><span class="t-tag tag-fe">CERT</span></div>
+ <div class="topic" onclick="tick(this,'fe29')"><div class="t-chk" id="fe29"></div><div class="t-info"><div class="t-name">FreeCodeCamp — Front End Libraries</div></div><span class="t-tag tag-fe">CERT</span></div>
+ </div>
+ </div>
+</div>
+
+<!-- PHASE 3 — FULL STACK -->
+<div class="phase" id="p3">
+ <div class="phase-header" onclick="togglePhase('p3')">
+ <div class="phase-top">
+ <div class="phase-badge">
+ <div class="phase-num">03</div>
+ 
+ <div class="phase-name">Full Stack</div>
+ </div>
+ <div class="phase-chevron" id="arr-p3">▼</div>
+ </div>
+ <div class="phase-meta">
+ <span class="pmeta time"> 4 months · 2 months</span>
+ <span class="pmeta level">Intermediate</span>
+ </div>
+ <div class="phase-prog-bar"><div class="phase-prog-fill" id="pp-p3"></div></div>
+ </div>
+ <div class="phase-body" id="pb-p3">
+ <div class="section">
+ <div class="section-title">Python</div>
+ <div class="topic" onclick="tick(this,'fs1')"><div class="t-chk" id="fs1"></div><div class="t-info"><div class="t-name">Python Syntax & Data Types</div><div class="t-desc">Variables, strings, lists, tuples, sets, dicts, f-strings</div></div><span class="t-tag tag-fs">CORE</span></div>
+ <div class="topic" onclick="tick(this,'fs2')"><div class="t-chk" id="fs2"></div><div class="t-info"><div class="t-name">Functions OOP & Modules</div><div class="t-desc">def, class, inheritance, decorators, generators, imports, pip</div></div><span class="t-tag tag-fs">CORE</span></div>
+ <div class="topic" onclick="tick(this,'fs3')"><div class="t-chk" id="fs3"></div><div class="t-info"><div class="t-name">File Handling & Error Handling</div><div class="t-desc">open/read/write, try/except/finally, custom exceptions</div></div><span class="t-tag tag-fs">PRACTICE</span></div>
+ <div class="topic" onclick="tick(this,'fs4')"><div class="t-chk" id="fs4"></div><div class="t-info"><div class="t-name">Async Python & APIs</div><div class="t-desc">asyncio, requests library, fetch JSON APIs, parse responses</div></div><span class="t-tag tag-fs">PRACTICE</span></div>
+ </div>
+ <div class="section">
+ <div class="section-title">Backend & APIs</div>
+ <div class="topic" onclick="tick(this,'fs5')"><div class="t-chk" id="fs5"></div><div class="t-info"><div class="t-name">REST API Design</div><div class="t-desc">GET/POST/PUT/PATCH/DELETE, status codes, headers, JSON</div></div><span class="t-tag tag-fs">CORE</span></div>
+ <div class="topic" onclick="tick(this,'fs6')"><div class="t-chk" id="fs6"></div><div class="t-info"><div class="t-name">FastAPI — Endpoints & Pydantic</div><div class="t-desc">Path/query params, request body, Pydantic validation, Swagger docs</div></div><span class="t-tag tag-fs">CORE</span></div>
+ <div class="topic" onclick="tick(this,'fs7')"><div class="t-chk" id="fs7"></div><div class="t-info"><div class="t-name">Authentication — JWT & bcrypt</div><div class="t-desc">Password hashing, JWT tokens, protected routes, refresh tokens</div></div><span class="t-tag tag-fs">CORE</span></div>
+ </div>
+ <div class="section">
+ <div class="section-title">Databases</div>
+ <div class="topic" onclick="tick(this,'fs8')"><div class="t-chk" id="fs8"></div><div class="t-info"><div class="t-name">SQL — SELECT JOIN GROUP BY</div><div class="t-desc">Queries, JOINs, aggregates, indexes, transactions, constraints</div></div><span class="t-tag tag-fs">CORE</span></div>
+ <div class="topic" onclick="tick(this,'fs9')"><div class="t-chk" id="fs9"></div><div class="t-info"><div class="t-name">PostgreSQL with SQLAlchemy & Alembic</div><div class="t-desc">ORM models, CRUD, migrations, relationships</div></div><span class="t-tag tag-fs">PRACTICE</span></div>
+ <div class="topic" onclick="tick(this,'fs10')"><div class="t-chk" id="fs10"></div><div class="t-info"><div class="t-name">MongoDB & Redis</div><div class="t-desc">NoSQL documents, pymongo CRUD, Redis caching, rate limiting</div></div><span class="t-tag tag-fs">PRACTICE</span></div>
+ </div>
+ <div class="section">
+ <div class="section-title">DevOps Basics</div>
+ <div class="topic" onclick="tick(this,'fs11')"><div class="t-chk" id="fs11"></div><div class="t-info"><div class="t-name">Docker — Containers</div><div class="t-desc">Dockerfile, build/run images, docker-compose, multi-service apps</div></div><span class="t-tag tag-fs">CORE</span></div>
+ <div class="topic" onclick="tick(this,'fs12')"><div class="t-chk" id="fs12"></div><div class="t-info"><div class="t-name">CI/CD — GitHub Actions</div><div class="t-desc">Auto test → build → deploy pipeline on git push</div></div><span class="t-tag tag-fs">PRACTICE</span></div>
+ <div class="topic" onclick="tick(this,'fs13')"><div class="t-chk" id="fs13"></div><div class="t-info"><div class="t-name">Deploy — Railway & Render</div><div class="t-desc">Deploy FastAPI + PostgreSQL, live URL, environment variables</div></div><span class="t-tag tag-fs">PROJECT</span></div>
+ </div>
+ <div class="section">
+ <div class="section-title">Certificates</div>
+ <div class="topic" onclick="tick(this,'fs14')"><div class="t-chk" id="fs14"></div><div class="t-info"><div class="t-name">FreeCodeCamp — Back End Dev & APIs</div></div><span class="t-tag tag-fs">CERT</span></div>
+ <div class="topic" onclick="tick(this,'fs15')"><div class="t-chk" id="fs15"></div><div class="t-info"><div class="t-name">Google IT Automation with Python</div></div><span class="t-tag tag-fs">CERT</span></div>
+ </div>
+ </div>
+</div>
+
+<!-- PHASE 4 — WEB SECURITY -->
+<div class="phase" id="p4">
+ <div class="phase-header" onclick="togglePhase('p4')">
+ <div class="phase-top">
+ <div class="phase-badge">
+ <div class="phase-num">04</div>
+ 
+ <div class="phase-name">Web Security</div>
+ </div>
+ <div class="phase-chevron" id="arr-p4">▼</div>
+ </div>
+ <div class="phase-meta">
+ <span class="pmeta time"> 6 months · 3 months</span>
+ <span class="pmeta level">Advanced</span>
+ </div>
+ <div class="phase-prog-bar"><div class="phase-prog-fill" id="pp-p4"></div></div>
+ </div>
+ <div class="phase-body" id="pb-p4">
+ <div class="section">
+ <div class="section-title">Security Fundamentals</div>
+ <div class="topic" onclick="tick(this,'ws1')"><div class="t-chk" id="ws1"></div><div class="t-info"><div class="t-name">CIA Triad & Security Mindset</div><div class="t-desc">Confidentiality/Integrity/Availability, attacker vs defender mindset</div></div><span class="t-tag tag-sec">CORE</span></div>
+ <div class="topic" onclick="tick(this,'ws2')"><div class="t-chk" id="ws2"></div><div class="t-info"><div class="t-name">OWASP Top 10 — Full Study</div><div class="t-desc">A01-A10: Broken Access, Injection, XSS, IDOR, SSRF, all 10 risks</div></div><span class="t-tag tag-sec">CORE</span></div>
+ <div class="topic" onclick="tick(this,'ws3')"><div class="t-chk" id="ws3"></div><div class="t-info"><div class="t-name">Famous CVEs — Heartbleed Log4Shell EternalBlue</div><div class="t-desc">Research 8 famous vulnerabilities, understand impact and patches</div></div><span class="t-tag tag-sec">CORE</span></div>
+ </div>
+ <div class="section">
+ <div class="section-title">Web Attacks — PortSwigger Labs</div>
+ <div class="topic" onclick="tick(this,'ws4')"><div class="t-chk" id="ws4"></div><div class="t-info"><div class="t-name">SQL Injection — All Types</div><div class="t-desc">Classic, union-based, blind boolean, blind time-based, sqlmap</div></div><span class="t-tag tag-sec">PRACTICE</span></div>
+ <div class="topic" onclick="tick(this,'ws5')"><div class="t-chk" id="ws5"></div><div class="t-info"><div class="t-name">XSS — Reflected Stored DOM</div><div class="t-desc">All 3 types, cookie stealing, filter bypass, WAF bypass</div></div><span class="t-tag tag-sec">PRACTICE</span></div>
+ <div class="topic" onclick="tick(this,'ws6')"><div class="t-chk" id="ws6"></div><div class="t-info"><div class="t-name">CSRF, IDOR & Access Control</div><div class="t-desc">CSRF tokens, SameSite, horizontal/vertical privilege escalation</div></div><span class="t-tag tag-sec">PRACTICE</span></div>
+ <div class="topic" onclick="tick(this,'ws7')"><div class="t-chk" id="ws7"></div><div class="t-info"><div class="t-name">SSRF, XXE & Path Traversal</div><div class="t-desc">Server-side request forgery, XML injection, directory traversal</div></div><span class="t-tag tag-sec">PRACTICE</span></div>
+ <div class="topic" onclick="tick(this,'ws8')"><div class="t-chk" id="ws8"></div><div class="t-info"><div class="t-name">OS Command Injection & SSTI</div><div class="t-desc">Command injection payloads, Jinja2/Twig template injection</div></div><span class="t-tag tag-sec">PRACTICE</span></div>
+ <div class="topic" onclick="tick(this,'ws9')"><div class="t-chk" id="ws9"></div><div class="t-info"><div class="t-name">Authentication Attacks</div><div class="t-desc">Brute force, username enumeration, OAuth flaws, 2FA bypass</div></div><span class="t-tag tag-sec">PRACTICE</span></div>
+ </div>
+ <div class="section">
+ <div class="section-title">Pentesting Tools</div>
+ <div class="topic" onclick="tick(this,'ws10')"><div class="t-chk" id="ws10"></div><div class="t-info"><div class="t-name">Nmap — Port Scanning</div><div class="t-desc">-sV, -sC, -A, -O, timing templates, output formats</div></div><span class="t-tag tag-sec">PRACTICE</span></div>
+ <div class="topic" onclick="tick(this,'ws11')"><div class="t-chk" id="ws11"></div><div class="t-info"><div class="t-name">Burp Suite — Full Workflow</div><div class="t-desc">Proxy intercept, Repeater, Intruder, Scanner, extensions</div></div><span class="t-tag tag-sec">PRACTICE</span></div>
+ <div class="topic" onclick="tick(this,'ws12')"><div class="t-chk" id="ws12"></div><div class="t-info"><div class="t-name">Metasploit & Meterpreter</div><div class="t-desc">msfconsole, exploit modules, sessions, post-exploitation</div></div><span class="t-tag tag-sec">PRACTICE</span></div>
+ <div class="topic" onclick="tick(this,'ws13')"><div class="t-chk" id="ws13"></div><div class="t-info"><div class="t-name">Linux Privilege Escalation</div><div class="t-desc">SUID, sudo misconfig, cron jobs, writable files, kernel exploits</div></div><span class="t-tag tag-sec">PRACTICE</span></div>
+ <div class="topic" onclick="tick(this,'ws14')"><div class="t-chk" id="ws14"></div><div class="t-info"><div class="t-name">Password Attacks — Hashcat & Hydra</div><div class="t-desc">Hash cracking, wordlists, rule-based, online brute force</div></div><span class="t-tag tag-sec">PRACTICE</span></div>
+ </div>
+ <div class="section">
+ <div class="section-title">TryHackMe & CTFs</div>
+ <div class="topic" onclick="tick(this,'ws15')"><div class="t-chk" id="ws15"></div><div class="t-info"><div class="t-name">TryHackMe — Jr Pentester Path</div><div class="t-desc">Complete full learning path, earn certificate, write all writeups</div></div><span class="t-tag tag-sec">PROJECT</span></div>
+ <div class="topic" onclick="tick(this,'ws16')"><div class="t-chk" id="ws16"></div><div class="t-info"><div class="t-name">15 TryHackMe Machines</div><div class="t-desc">Easy→Medium→Hard: Mr Robot, Blue, Daily Bugle, Internal etc.</div></div><span class="t-tag tag-sec">PROJECT</span></div>
+ <div class="topic" onclick="tick(this,'ws17')"><div class="t-chk" id="ws17"></div><div class="t-info"><div class="t-name">picoCTF — 25 Challenges</div><div class="t-desc">Web, forensics, crypto, binary challenges with writeups</div></div><span class="t-tag tag-sec">PROJECT</span></div>
+ <div class="topic" onclick="tick(this,'ws18')"><div class="t-chk" id="ws18"></div><div class="t-info"><div class="t-name">Bug Bounty — First Reports</div><div class="t-desc">HackerOne/Bugcrowd, recon methodology, write professional reports</div></div><span class="t-tag tag-sec">PROJECT</span></div>
+ <div class="topic" onclick="tick(this,'ws19')"><div class="t-chk" id="ws19"></div><div class="t-info"><div class="t-name">Pentest Report Writing</div><div class="t-desc">Executive summary, CVSS scores, technical findings, remediation</div></div><span class="t-tag tag-sec">PROJECT</span></div>
+ </div>
+ <div class="section">
+ <div class="section-title">Python Security Tools</div>
+ <div class="topic" onclick="tick(this,'ws20')"><div class="t-chk" id="ws20"></div><div class="t-info"><div class="t-name">Build Port Scanner</div><div class="t-desc">Multithreaded, service detection, JSON output, CLI args</div></div><span class="t-tag tag-sec">PROJECT</span></div>
+ <div class="topic" onclick="tick(this,'ws21')"><div class="t-chk" id="ws21"></div><div class="t-info"><div class="t-name">Build Hash Cracker & Password Checker</div><div class="t-desc">MD5/SHA1/SHA256, wordlist cracking, password strength analyzer</div></div><span class="t-tag tag-sec">PROJECT</span></div>
+ </div>
+ <div class="section">
+ <div class="section-title">Certificates</div>
+ <div class="topic" onclick="tick(this,'ws22')"><div class="t-chk" id="ws22"></div><div class="t-info"><div class="t-name">Google Cybersecurity Certificate</div></div><span class="t-tag tag-sec">CERT</span></div>
+ <div class="topic" onclick="tick(this,'ws23')"><div class="t-chk" id="ws23"></div><div class="t-info"><div class="t-name">TryHackMe Jr Pentester Certificate</div></div><span class="t-tag tag-sec">CERT</span></div>
+ <div class="topic" onclick="tick(this,'ws24')"><div class="t-chk" id="ws24"></div><div class="t-info"><div class="t-name">CompTIA Security+ (Study)</div></div><span class="t-tag tag-sec">CERT</span></div>
+ <div class="topic" onclick="tick(this,'ws25')"><div class="t-chk" id="ws25"></div><div class="t-info"><div class="t-name">eJPT — eLearnSecurity Junior Pentester</div></div><span class="t-tag tag-sec">CERT</span></div>
+ </div>
+ </div>
+</div>
+
+<!-- PHASE 5 — CYBERSECURITY -->
+<div class="phase" id="p5">
+ <div class="phase-header" onclick="togglePhase('p5')">
+ <div class="phase-top">
+ <div class="phase-badge">
+ <div class="phase-num">05</div>
+ 
+ <div class="phase-name">Cybersecurity</div>
+ </div>
+ <div class="phase-chevron" id="arr-p5">▼</div>
+ </div>
+ <div class="phase-meta">
+ <span class="pmeta time"> 5 months · 3 months</span>
+ <span class="pmeta level">Advanced</span>
+ </div>
+ <div class="phase-prog-bar"><div class="phase-prog-fill" id="pp-p5"></div></div>
+ </div>
+ <div class="phase-body" id="pb-p5">
+ <div class="section">
+ <div class="section-title">Network Security</div>
+ <div class="topic" onclick="tick(this,'cy1')"><div class="t-chk" id="cy1"></div><div class="t-info"><div class="t-name">OSI Model — All 7 Layers</div><div class="t-desc">Physical/DataLink/Network/Transport/Session/Presentation/Application</div></div><span class="t-tag tag-sec">CORE</span></div>
+ <div class="topic" onclick="tick(this,'cy2')"><div class="t-chk" id="cy2"></div><div class="t-info"><div class="t-name">Subnetting & CIDR</div><div class="t-desc">Network/broadcast address, host ranges, practice 30 problems</div></div><span class="t-tag tag-sec">PRACTICE</span></div>
+ <div class="topic" onclick="tick(this,'cy3')"><div class="t-chk" id="cy3"></div><div class="t-info"><div class="t-name">Firewalls, IDS, IPS & SIEM</div><div class="t-desc">Stateful/stateless, signature/anomaly detection, log correlation</div></div><span class="t-tag tag-sec">CORE</span></div>
+ <div class="topic" onclick="tick(this,'cy4')"><div class="t-chk" id="cy4"></div><div class="t-info"><div class="t-name">Wireshark Packet Analysis</div><div class="t-desc">Capture/filter traffic, find credentials, detect port scans, MITM</div></div><span class="t-tag tag-sec">PRACTICE</span></div>
+ <div class="topic" onclick="tick(this,'cy5')"><div class="t-chk" id="cy5"></div><div class="t-info"><div class="t-name">Network Attacks — MITM ARP DNS DDoS</div><div class="t-desc">ARP poisoning, DNS spoofing, DDoS types, amplification attacks</div></div><span class="t-tag tag-sec">CORE</span></div>
+ </div>
+ <div class="section">
+ <div class="section-title">Cloud Security</div>
+ <div class="topic" onclick="tick(this,'cy6')"><div class="t-chk" id="cy6"></div><div class="t-info"><div class="t-name">AWS IAM — Least Privilege</div><div class="t-desc">Users/groups/roles/policies, IAM simulator, MFA enforcement</div></div><span class="t-tag tag-sec">PRACTICE</span></div>
+ <div class="topic" onclick="tick(this,'cy7')"><div class="t-chk" id="cy7"></div><div class="t-info"><div class="t-name">AWS S3 & EC2 Security</div><div class="t-desc">Bucket policies, public access block, security groups, NACLs</div></div><span class="t-tag tag-sec">PRACTICE</span></div>
+ <div class="topic" onclick="tick(this,'cy8')"><div class="t-chk" id="cy8"></div><div class="t-info"><div class="t-name">CloudTrail GuardDuty & Zero Trust</div><div class="t-desc">API logging, threat detection, never trust always verify architecture</div></div><span class="t-tag tag-sec">CORE</span></div>
+ <div class="topic" onclick="tick(this,'cy9')"><div class="t-chk" id="cy9"></div><div class="t-info"><div class="t-name">Container Security — Docker & Kubernetes</div><div class="t-desc">Container escape, image scanning, K8s RBAC, secrets management</div></div><span class="t-tag tag-sec">PRACTICE</span></div>
+ </div>
+ <div class="section">
+ <div class="section-title">SOC & Incident Response</div>
+ <div class="topic" onclick="tick(this,'cy10')"><div class="t-chk" id="cy10"></div><div class="t-info"><div class="t-name">SOC Operations & Alert Triage</div><div class="t-desc">T1/T2/T3 roles, true/false positives, severity levels, escalation</div></div><span class="t-tag tag-sec">CORE</span></div>
+ <div class="topic" onclick="tick(this,'cy11')"><div class="t-chk" id="cy11"></div><div class="t-info"><div class="t-name">Splunk SPL & ELK Dashboards</div><div class="t-desc">Search queries, correlation rules, dashboards, alerting</div></div><span class="t-tag tag-sec">PRACTICE</span></div>
+ <div class="topic" onclick="tick(this,'cy12')"><div class="t-chk" id="cy12"></div><div class="t-info"><div class="t-name">MITRE ATT&CK Framework</div><div class="t-desc">14 tactics, TTPs, APT groups, navigator layers, detection rules</div></div><span class="t-tag tag-sec">CORE</span></div>
+ <div class="topic" onclick="tick(this,'cy13')"><div class="t-chk" id="cy13"></div><div class="t-info"><div class="t-name">Incident Response Lifecycle</div><div class="t-desc">Preparation/Identification/Containment/Eradication/Recovery/Lessons</div></div><span class="t-tag tag-sec">CORE</span></div>
+ <div class="topic" onclick="tick(this,'cy14')"><div class="t-chk" id="cy14"></div><div class="t-info"><div class="t-name">IR Playbooks — Ransomware & Phishing</div><div class="t-desc">Write complete playbooks, containment steps, evidence collection</div></div><span class="t-tag tag-sec">PROJECT</span></div>
+ </div>
+ <div class="section">
+ <div class="section-title">Forensics & Malware</div>
+ <div class="topic" onclick="tick(this,'cy15')"><div class="t-chk" id="cy15"></div><div class="t-info"><div class="t-name">Memory Forensics — Volatility</div><div class="t-desc">pslist, netscan, malfind, dumpfiles, registry analysis</div></div><span class="t-tag tag-sec">PRACTICE</span></div>
+ <div class="topic" onclick="tick(this,'cy16')"><div class="t-chk" id="cy16"></div><div class="t-info"><div class="t-name">Log Analysis — Windows & Linux</div><div class="t-desc">Event IDs 4624/4625/4688, auth.log, syslog forensic investigation</div></div><span class="t-tag tag-sec">PRACTICE</span></div>
+ <div class="topic" onclick="tick(this,'cy17')"><div class="t-chk" id="cy17"></div><div class="t-info"><div class="t-name">Malware Analysis — Static & Dynamic</div><div class="t-desc">strings, PE headers, VirusTotal, any.run sandbox, YARA rules</div></div><span class="t-tag tag-sec">PRACTICE</span></div>
+ <div class="topic" onclick="tick(this,'cy18')"><div class="t-chk" id="cy18"></div><div class="t-info"><div class="t-name">LetsDefend — 15 Incident Investigations</div><div class="t-desc">Real SOC alerts, full investigation reports, quality documentation</div></div><span class="t-tag tag-sec">PROJECT</span></div>
+ </div>
+ <div class="section">
+ <div class="section-title">Frameworks & Compliance</div>
+ <div class="topic" onclick="tick(this,'cy19')"><div class="t-chk" id="cy19"></div><div class="t-info"><div class="t-name">NIST CSF & ISO 27001</div><div class="t-desc">5 functions: Identify/Protect/Detect/Respond/Recover, Annex A controls</div></div><span class="t-tag tag-sec">CORE</span></div>
+ <div class="topic" onclick="tick(this,'cy20')"><div class="t-chk" id="cy20"></div><div class="t-info"><div class="t-name">Cryptography Fundamentals</div><div class="t-desc">Symmetric/asymmetric, AES/RSA, PKI, hashing, digital signatures</div></div><span class="t-tag tag-sec">CORE</span></div>
+ </div>
+ <div class="section">
+ <div class="section-title">Certificates</div>
+ <div class="topic" onclick="tick(this,'cy21')"><div class="t-chk" id="cy21"></div><div class="t-info"><div class="t-name">IBM Cybersecurity Analyst Professional</div></div><span class="t-tag tag-sec">CERT</span></div>
+ <div class="topic" onclick="tick(this,'cy22')"><div class="t-chk" id="cy22"></div><div class="t-info"><div class="t-name">Splunk Core Certified User</div></div><span class="t-tag tag-sec">CERT</span></div>
+ <div class="topic" onclick="tick(this,'cy23')"><div class="t-chk" id="cy23"></div><div class="t-info"><div class="t-name">AWS Cloud Practitioner</div></div><span class="t-tag tag-sec">CERT</span></div>
+ <div class="topic" onclick="tick(this,'cy24')"><div class="t-chk" id="cy24"></div><div class="t-info"><div class="t-name">CompTIA CySA+ (Study & Exam)</div></div><span class="t-tag tag-sec">CERT</span></div>
+ </div>
+ </div>
+</div>
+
+<!-- PHASE 6 — AI ENGINEER -->
+<div class="phase" id="p6">
+ <div class="phase-header" onclick="togglePhase('p6')">
+ <div class="phase-top">
+ <div class="phase-badge">
+ <div class="phase-num">06</div>
+ 
+ <div class="phase-name">AI Engineer</div>
+ </div>
+ <div class="phase-chevron" id="arr-p6">▼</div>
+ </div>
+ <div class="phase-meta">
+ <span class="pmeta time"> 6 months · 3 months</span>
+ <span class="pmeta level">Expert</span>
+ </div>
+ <div class="phase-prog-bar"><div class="phase-prog-fill" id="pp-p6"></div></div>
+ </div>
+ <div class="phase-body" id="pb-p6">
+ <div class="section">
+ <div class="section-title">ML Foundations</div>
+ <div class="topic" onclick="tick(this,'ai1')"><div class="t-chk" id="ai1"></div><div class="t-info"><div class="t-name">Math for ML — Linear Algebra & Calculus</div><div class="t-desc">Vectors/matrices, derivatives, gradient descent intuition</div></div><span class="t-tag tag-ai">CORE</span></div>
+ <div class="topic" onclick="tick(this,'ai2')"><div class="t-chk" id="ai2"></div><div class="t-info"><div class="t-name">NumPy & Pandas</div><div class="t-desc">Arrays, DataFrames, data cleaning, groupby, merge, exploration</div></div><span class="t-tag tag-ai">PRACTICE</span></div>
+ <div class="topic" onclick="tick(this,'ai3')"><div class="t-chk" id="ai3"></div><div class="t-info"><div class="t-name">Data Visualization — Matplotlib & Seaborn</div><div class="t-desc">10 chart types, publication-quality plots, storytelling with data</div></div><span class="t-tag tag-ai">PRACTICE</span></div>
+ <div class="topic" onclick="tick(this,'ai4')"><div class="t-chk" id="ai4"></div><div class="t-info"><div class="t-name">Scikit-learn — Classification & Regression</div><div class="t-desc">Linear/logistic regression, decision trees, random forest, SVM, KNN</div></div><span class="t-tag tag-ai">PRACTICE</span></div>
+ <div class="topic" onclick="tick(this,'ai5')"><div class="t-chk" id="ai5"></div><div class="t-info"><div class="t-name">Model Evaluation & Tuning</div><div class="t-desc">Accuracy/precision/recall/F1/AUC, cross-validation, GridSearchCV</div></div><span class="t-tag tag-ai">CORE</span></div>
+ </div>
+ <div class="section">
+ <div class="section-title">Deep Learning</div>
+ <div class="topic" onclick="tick(this,'ai6')"><div class="t-chk" id="ai6"></div><div class="t-info"><div class="t-name">Neural Network Theory</div><div class="t-desc">Neurons, layers, activation functions, backpropagation, optimizers</div></div><span class="t-tag tag-ai">CORE</span></div>
+ <div class="topic" onclick="tick(this,'ai7')"><div class="t-chk" id="ai7"></div><div class="t-info"><div class="t-name">PyTorch — Tensors & Training Loop</div><div class="t-desc">Tensors, autograd, nn.Module, loss functions, training/validation</div></div><span class="t-tag tag-ai">PRACTICE</span></div>
+ <div class="topic" onclick="tick(this,'ai8')"><div class="t-chk" id="ai8"></div><div class="t-info"><div class="t-name">CNNs — Image Classification</div><div class="t-desc">Conv2d, MaxPool, BatchNorm, Dropout, MNIST/CIFAR-10</div></div><span class="t-tag tag-ai">PRACTICE</span></div>
+ </div>
+ <div class="section">
+ <div class="section-title">LLMs & Prompt Engineering</div>
+ <div class="topic" onclick="tick(this,'ai9')"><div class="t-chk" id="ai9"></div><div class="t-info"><div class="t-name">How LLMs & Transformers Work</div><div class="t-desc">Tokens, context window, attention, temperature, hallucination, RLHF</div></div><span class="t-tag tag-ai">CORE</span></div>
+ <div class="topic" onclick="tick(this,'ai10')"><div class="t-chk" id="ai10"></div><div class="t-info"><div class="t-name">Prompt Engineering</div><div class="t-desc">Zero/few-shot, chain-of-thought, ReAct, prompt chaining, output format</div></div><span class="t-tag tag-ai">PRACTICE</span></div>
+ <div class="topic" onclick="tick(this,'ai11')"><div class="t-chk" id="ai11"></div><div class="t-info"><div class="t-name">OpenAI & Claude APIs</div><div class="t-desc">Chat completions, system messages, streaming, rate limiting, costs</div></div><span class="t-tag tag-ai">PRACTICE</span></div>
+ <div class="topic" onclick="tick(this,'ai12')"><div class="t-chk" id="ai12"></div><div class="t-info"><div class="t-name">HuggingFace — Pretrained Models</div><div class="t-desc">Pipeline API, sentiment/NER/summarization/QA, model hub</div></div><span class="t-tag tag-ai">PRACTICE</span></div>
+ </div>
+ <div class="section">
+ <div class="section-title">RAG & AI Agents</div>
+ <div class="topic" onclick="tick(this,'ai13')"><div class="t-chk" id="ai13"></div><div class="t-info"><div class="t-name">Embeddings & Vector Databases</div><div class="t-desc">Semantic search, ChromaDB/Pinecone/Weaviate, similarity search</div></div><span class="t-tag tag-ai">CORE</span></div>
+ <div class="topic" onclick="tick(this,'ai14')"><div class="t-chk" id="ai14"></div><div class="t-info"><div class="t-name">RAG — Build Full Pipeline</div><div class="t-desc">Load→chunk→embed→store→retrieve→generate, evaluate with RAGAS</div></div><span class="t-tag tag-ai">PROJECT</span></div>
+ <div class="topic" onclick="tick(this,'ai15')"><div class="t-chk" id="ai15"></div><div class="t-info"><div class="t-name">LangChain & LlamaIndex</div><div class="t-desc">Chains, memory, document loaders, agents, tools, callbacks</div></div><span class="t-tag tag-ai">PRACTICE</span></div>
+ <div class="topic" onclick="tick(this,'ai16')"><div class="t-chk" id="ai16"></div><div class="t-info"><div class="t-name">AI Agents — ReAct & Tool Use</div><div class="t-desc">Agent loop, tools/functions, CrewAI multi-agent, AutoGen</div></div><span class="t-tag tag-ai">PROJECT</span></div>
+ <div class="topic" onclick="tick(this,'ai17')"><div class="t-chk" id="ai17"></div><div class="t-info"><div class="t-name">Fine-tuning — LoRA & QLoRA</div><div class="t-desc">When to fine-tune vs RAG, PEFT, instruction tuning, HuggingFace Hub</div></div><span class="t-tag tag-ai">PRACTICE</span></div>
+ <div class="topic" onclick="tick(this,'ai18')"><div class="t-chk" id="ai18"></div><div class="t-info"><div class="t-name">MCP — Model Context Protocol</div><div class="t-desc">MCP host/client/server, building MCP servers, tool integration</div></div><span class="t-tag tag-ai">CORE</span></div>
+ </div>
+ <div class="section">
+ <div class="section-title">AI Security</div>
+ <div class="topic" onclick="tick(this,'ai19')"><div class="t-chk" id="ai19"></div><div class="t-info"><div class="t-name">Prompt Injection Attacks</div><div class="t-desc">Direct/indirect injection, jailbreaking, data exfiltration, defenses</div></div><span class="t-tag tag-ai">CORE</span></div>
+ <div class="topic" onclick="tick(this,'ai20')"><div class="t-chk" id="ai20"></div><div class="t-info"><div class="t-name">OWASP Top 10 for LLMs</div><div class="t-desc">All 10 LLM risks, training data poisoning, model theft, supply chain</div></div><span class="t-tag tag-ai">CORE</span></div>
+ </div>
+ <div class="section">
+ <div class="section-title">MLOps & Deployment</div>
+ <div class="topic" onclick="tick(this,'ai21')"><div class="t-chk" id="ai21"></div><div class="t-info"><div class="t-name">MLflow & Weights & Biases</div><div class="t-desc">Experiment tracking, hyperparameter sweeps, model registry</div></div><span class="t-tag tag-ai">PRACTICE</span></div>
+ <div class="topic" onclick="tick(this,'ai22')"><div class="t-chk" id="ai22"></div><div class="t-info"><div class="t-name">Serve ML Models with FastAPI & Docker</div><div class="t-desc">Load model, predict endpoint, batch inference, containerize</div></div><span class="t-tag tag-ai">PROJECT</span></div>
+ <div class="topic" onclick="tick(this,'ai23')"><div class="t-chk" id="ai23"></div><div class="t-info"><div class="t-name">Model Monitoring — Data Drift</div><div class="t-desc">Evidently AI, detect drift, alert on degradation, retrain triggers</div></div><span class="t-tag tag-ai">PRACTICE</span></div>
+ <div class="topic" onclick="tick(this,'ai24')"><div class="t-chk" id="ai24"></div><div class="t-info"><div class="t-name">AWS SageMaker</div><div class="t-desc">Training jobs, model registry, endpoints, autopilot, Studio</div></div><span class="t-tag tag-ai">PRACTICE</span></div>
+ </div>
+ <div class="section">
+ <div class="section-title">Certificates</div>
+ <div class="topic" onclick="tick(this,'ai25')"><div class="t-chk" id="ai25"></div><div class="t-info"><div class="t-name">DeepLearning.AI — Prompt Engineering</div></div><span class="t-tag tag-ai">CERT</span></div>
+ <div class="topic" onclick="tick(this,'ai26')"><div class="t-chk" id="ai26"></div><div class="t-info"><div class="t-name">DeepLearning.AI — LangChain</div></div><span class="t-tag tag-ai">CERT</span></div>
+ <div class="topic" onclick="tick(this,'ai27')"><div class="t-chk" id="ai27"></div><div class="t-info"><div class="t-name">IBM AI Engineering Certificate</div></div><span class="t-tag tag-ai">CERT</span></div>
+ <div class="topic" onclick="tick(this,'ai28')"><div class="t-chk" id="ai28"></div><div class="t-info"><div class="t-name">Google ML Crash Course + Kaggle Certs</div></div><span class="t-tag tag-ai">CERT</span></div>
+ </div>
+ </div>
+</div>
+
+<div class="fab" id="fab" onclick="scrollTop()">↑</div>
+
+<script>
+let state = {};
+try { state = JSON.parse(localStorage.getItem('nv_roadmap') || '{}'); } catch(e){}
+
+const phases = {
+ p1:{name:'Fundamentals',color:'#f97316'},
+ p2:{name:'Frontend',color:'#60a5fa'},
+ p3:{name:'Full Stack',color:'#34d399'},
+ p4:{name:'Web Security',color:'#f87171'},
+ p5:{name:'Cybersecurity',color:'#f87171'},
+ p6:{name:'AI Engineer',color:'#c084fc'}
+};
+
+function save(){ localStorage.setItem('nv_roadmap', JSON.stringify(state)); }
+
+function tick(el, id){
+ const chk = document.getElementById(id);
+ const done = !state[id];
+ state[id] = done;
+ save();
+ if(done){
+ chk.classList.add('done');
+ el.classList.add('done-t');
+ showToast(' Topic complete!');
+ } else {
+ chk.classList.remove('done');
+ el.classList.remove('done-t');
+ }
+ updateStats();
+}
+
+function togglePhase(pid){
+ const body = document.getElementById('pb-'+pid);
+ const arr = document.getElementById('arr-'+pid);
+ const open = body.style.display === 'block';
+ body.style.display = open ? 'none' : 'block';
+ arr.classList.toggle('open', !open);
+}
+
+function updateStats(){
+ const allTopics = document.querySelectorAll('.topic');
+ const total = allTopics.length;
+ let done = 0;
+ allTopics.forEach(t => { if(t.classList.contains('done-t')) done++; });
+ document.getElementById('s-done').textContent = done;
+ document.getElementById('s-total').textContent = total;
+ document.getElementById('s-pct').textContent = Math.round(done/total*100)+'%';
+
+ // Phase progress bars
+ Object.keys(phases).forEach(pid => {
+ const topics = document.querySelectorAll('#pb-'+pid+' .topic');
+ const pdone = Array.from(topics).filter(t=>t.classList.contains('done-t')).length;
+ const pct = topics.length > 0 ? Math.round(pdone/topics.length*100) : 0;
+ const fill = document.getElementById('pp-'+pid);
+ if(fill) fill.style.width = pct+'%';
+ });
+
+ // Prog summary
+ const rows = document.getElementById('prog-rows');
+ rows.innerHTML = Object.keys(phases).map(pid => {
+ const topics = document.querySelectorAll('#pb-'+pid+' .topic');
+ const pdone = Array.from(topics).filter(t=>t.classList.contains('done-t')).length;
+ const pct = topics.length > 0 ? Math.round(pdone/topics.length*100) : 0;
+ return `<div class="ps-row">
+ <div class="ps-label">${phases[pid].name}</div>
+ <div class="ps-bar"><div class="ps-fill" style="width:${pct}%;background:${phases[pid].color}"></div></div>
+ <div class="ps-pct" style="color:${phases[pid].color}">${pct}%</div>
+ </div>`;
+ }).join('');
+}
+
+function restore(){
+ Object.keys(state).forEach(id => {
+ if(!state[id]) return;
+ const chk = document.getElementById(id);
+ if(!chk) return;
+ chk.classList.add('done');
+ const topic = chk.closest('.topic');
+ if(topic) topic.classList.add('done-t');
+ });
+ updateStats();
+}
+
+function showToast(msg){
+ const t = document.getElementById('toast');
+ t.textContent = msg;
+ t.classList.add('show');
+ setTimeout(()=>t.classList.remove('show'), 2000);
+}
+
+function scroll2(pid){
+ document.getElementById(pid).scrollIntoView({behavior:'smooth',block:'start'});
+ const body = document.getElementById('pb-'+pid);
+ const arr = document.getElementById('arr-'+pid);
+ body.style.display = 'block';
+ arr.classList.add('open');
+}
+
+function scrollTop(){ window.scrollTo({top:0,behavior:'smooth'}); }
+
+window.addEventListener('scroll',()=>{
+ document.getElementById('fab').style.opacity = window.scrollY > 300 ? '1' : '0';
+});
+
+restore();
+</script>
+</body>
+</html>
